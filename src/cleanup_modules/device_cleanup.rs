@@ -211,10 +211,11 @@ impl ToUninstall<Device> for DeviceToUninstall {
                 Some(uuid) => *other.class_guid() == uuid,
                 None => true,
             }
-            && other
-                .hardware_ids()
-                .iter()
-                .any(|hwid| regex_cache::cached_match(Some(hwid), self.hardware_id.as_deref()))
+            && (other.hardware_ids().len() == 0
+                || other
+                    .hardware_ids()
+                    .iter()
+                    .any(|hwid| regex_cache::cached_match(Some(hwid), self.hardware_id.as_deref())))
     }
 }
 
